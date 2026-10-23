@@ -86,7 +86,7 @@ All `/loans` routes need the header `Authorization: Bearer <token>`.
 | GET | `/loans` | optional `?status=all|pending|repaid` |
 | PATCH | `/loans/:id/repay` | marks the loan as repaid |
 | GET | `/loans/summary` | `{ totalLent, totalRepaid, totalPending, overdueAmount, overdueCount }` |
-| POST | `/loans/:id/receipt` | multipart form, field `receipt` (JPG/PNG/WEBP, max 5 MB) |
+| POST | `/loans/:id/receipt` | JSON `{ "imageBase64": "..." }` or multipart field `receipt` (JPG/PNG/WEBP, max 5 MB) |
 | GET | `/loans/:id/receipt` | returns the image |
 
 Quick test with curl:

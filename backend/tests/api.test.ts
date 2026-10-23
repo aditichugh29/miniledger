@@ -2,6 +2,10 @@ import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
 
 // These tests only exercise validation and auth guards, so no real database is needed.
 vi.mock('../src/db.js', () => ({ prisma: {} }));
+vi.mock('@prisma/client', () => ({
+  LoanStatus: { PENDING: 'PENDING', REPAID: 'REPAID' },
+  Prisma: { Decimal: Number },
+}));
 
 import { buildApp } from '../src/app.js';
 

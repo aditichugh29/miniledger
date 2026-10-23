@@ -1,0 +1,49 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum LoanStatus {
+  PENDING
+  REPAID
+}
+
+model User {
+  id        String   @id @default(uuid())
+  phone     String   @unique // stored as +91XXXXXXXXXX
+  createdAt DateTime @default(now())
+  loans     Loan[]
+}
+
+// One row per OTP we issue. We store a hash, never the raw code.
+model OtpCode {
+  id        String   @id @default(uuid())
+  phone     String
+  codeHash  String
+  expiresAt DateTime
+  attempts  Int      @default(0)
+  consumed  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([phone, createdAt])
+}
+
+model Loan {
+  id          String     @id @default(uuid())
+  userId      String
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  friendName  String
+  amount      Decimal    @db.Decimal(12, 2)
+  dueDate     DateTime   @db.Date
+  status      LoanStatus @default(PENDING)
+  repaidAt    DateTime?
+  receiptFile String? // file name inside the uploads folder
+  createdAt   DateTime   @default(now())
+
+  @@index([userId, status])
+  @@index([userId, dueDate])
+}

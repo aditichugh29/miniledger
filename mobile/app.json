@@ -1,0 +1,24 @@
+{
+  "expo": {
+    "name": "MiniLedger",
+    "slug": "miniledger",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "android": {
+      "package": "com.miniledger.app"
+    },
+    "ios": {
+      "supportsTablet": false
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow MiniLedger to pick a receipt photo."
+        }
+      ],
+      "expo-status-bar"
+    ]
+  }
+}
